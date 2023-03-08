@@ -91,7 +91,7 @@ contract MultiSigWallet {
    function _getApprovalCount(uint _txId) private view returns (uint count){
        
        address[] memory owner = new address[](owners.length);
-       
+        
        for (uint i; i < owner.length; i++) 
        {
            if (approved[_txId][owner[i]]) {
