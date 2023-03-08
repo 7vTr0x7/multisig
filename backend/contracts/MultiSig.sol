@@ -11,7 +11,6 @@ contract MultiSigWallet {
    struct Tx{
     address to;
     uint256 value;
-    bytes data;
     bool executed;
    }
 
@@ -40,14 +39,14 @@ contract MultiSigWallet {
    }
 
    modifier notExecuted(uint _txId) {
-       require(txs[_txId].executed,"tx already executed");
+       require(!txs[_txId].executed,"tx already executed");
        _;
    }
 
    function setOwners(address[] memory _owners,uint256 _required) external {
        require(_owners.length > 0,"owners required");
        require( 
-        _required > 0 && _required <= owners.length,
+        _required > 0 && _required <= _owners.length,
         "invalid required num of owners"
        );
 
@@ -62,16 +61,14 @@ contract MultiSigWallet {
 
        required = _required;
    }
-
    receive() external payable {
      emit Deposit(msg.sender, msg.value);
    }
 
-   function submit(address _to, uint256 _value, bytes calldata _data)  external onlyOwner {
+   function submit(address _to, uint256 _value)  external onlyOwner {
      txs.push(Tx(
         _to,
         _value,
-        _data,
         false
      ));
 
@@ -89,12 +86,10 @@ contract MultiSigWallet {
    }
 
    function _getApprovalCount(uint _txId) private view returns (uint count){
-       
-       address[] memory owner = new address[](owners.length);
-        
-       for (uint i; i < owner.length; i++) 
+            
+       for (uint i; i < owners.length; i++) 
        {
-           if (approved[_txId][owner[i]]) {
+           if (approved[_txId][owners[i]]) {
                count += 1;
            }
        }
@@ -106,7 +101,7 @@ contract MultiSigWallet {
 
        trans.executed = true;
 
-       (bool success, ) = trans.to.call{value: trans.value}(trans.data);
+       (bool success, ) = trans.to.call{value: trans.value}("");
 
        require(success, " tx failed");
 
@@ -119,3 +114,5 @@ contract MultiSigWallet {
        emit Revoke(msg.sender, _txId);
    }
 }
+
+

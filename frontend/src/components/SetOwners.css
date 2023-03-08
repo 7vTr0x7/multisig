@@ -1,0 +1,21 @@
+.form-label{
+    font-weight: bold;
+}
+.form-control{
+    background-color: transparent;
+    color: black;
+    font-weight: bold;
+}
+.container-md{
+    border-color: 1px solid black;
+    width: 100px;
+}
+.btn{
+    background-color: transparent;
+    font-weight: bold;
+    border: 2px solid black;
+    margin-top: 1rem;
+}
+.consent{
+    font-weight: bold;
+}
