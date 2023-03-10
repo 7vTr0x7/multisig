@@ -61,7 +61,7 @@ contract MultiSigWallet {
 
        required = _required;
    }
-   receive() external payable {
+    function deposit() external payable {
      emit Deposit(msg.sender, msg.value);
    }
 
@@ -85,7 +85,7 @@ contract MultiSigWallet {
       emit Approve(msg.sender, _txId);
    }
 
-   function _getApprovalCount(uint _txId) private view returns (uint count){
+   function _getApprovalCount(uint _txId) public view returns (uint count){
             
        for (uint i; i < owners.length; i++) 
        {

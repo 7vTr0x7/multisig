@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import multiSig from "./utils/MultiSigWallet.json";
 
-import { SetOwners } from "./components/index";
+import { SetOwners,Deposits,Submit,Approve,Revoke,Execute } from "./components/index";
 
 import "./App.css";
 
@@ -18,7 +18,7 @@ function App() {
   const [account, setAccount] = useState("None");
 
   const connectWallet = async () => {
-    const contractAddress = "0xEA296aC46CF4c92a9a48a4A564809681c78C5da8";
+    const contractAddress = "0x2865f8360a82F9A098D4FB8541b4565bbC3D42e2";
     const contractABI = multiSig.abi;
     try {
       const { ethereum } = window;
@@ -69,14 +69,14 @@ function App() {
   </button>
   ) : (
       <div style={{ height: "100%" }}>
-        {/* <p
-          className="text-muted lead "
-          style={{ marginTop: "10px", marginLeft: "5px" }}
-        >
-          <small className="acc">Connected Account : {account}</small>
-        </p> */}
         <div className="container">
           < SetOwners state = {state} />
+          < Deposits state = {state} />
+          < Submit state = {state} />
+          < Approve state = {state} />
+          < Revoke state = {state} />
+          < Execute state = {state} />
+
         </div>
       </div>
         )}

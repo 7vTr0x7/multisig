@@ -8,7 +8,6 @@ const setOwners = async(event) => {
     const { contract } = state;
     const owners = [document.querySelector("#owners").value];
     const required = document.querySelector("#required").value;
-    console.log(owners, required);
 
     const str = owners.toString();
     const str_array = str.split(",");
